@@ -7,8 +7,8 @@ const baraja = BarajaExp.Baraja;
 
 class Mesa {
   constructor() {
-    this.cartasMesa = cartasMesa;
-    this.bote = bote;
+    this.cartasMesa = [];
+    this.bote = 0;
   }
 }
 

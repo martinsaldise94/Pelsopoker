@@ -27,6 +27,17 @@ class Jugador {
   }
 }
 
+// Elección de dealer aleatoria
+function elegirDealer(j1, j2) {
+  let resultado = Math.random() * 10;
+  if (resultado < 5) {
+    j1.isDealer = true;
+  } else {
+    j2.isDealer = true;
+  }
+}
+
 module.exports = {
   Jugador,
+  elegirDealer,
 };

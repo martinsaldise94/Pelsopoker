@@ -26,12 +26,17 @@ const mesa = MesaExp.Mesa;
 // - Se cambia de dealer
 
 const mazo = new baraja();
+const mesaJuego = new mesa();
 const j1 = new jugador("Humano");
 const j2 = new jugador("IA");
+
+JugadorExp.elegirDealer(j1, j2);
 
 mazo.barajar();
 mazo.repartir(j1, 2);
 mazo.repartir(j2, 2);
+
+mazo.colocarEnMesa(mesaJuego, 3);
 
 console.log(
   "Jugador 1:",
@@ -41,4 +46,12 @@ console.log(
   "Jugador 2:",
   j2.mano.map((mano) => mano.carta)
 );
+
+console.log(
+  "Mesa:",
+  mesaJuego.cartasMesa.map((mesa) => mesa.carta)
+);
 console.log("Cartas restantes:", mazo.cartas.length);
+
+console.log(j1.isDealer);
+console.log(j2.isDealer);

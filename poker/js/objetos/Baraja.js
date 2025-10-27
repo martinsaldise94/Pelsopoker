@@ -35,7 +35,7 @@ class Baraja {
     }
   }
 
-  colocarEnMesa(num) {
+  colocarEnMesa(mesa, num) {
     for (let i = 0; i < num; i++) {
       let repartido = [];
       repartido = this.cartas.pop();
