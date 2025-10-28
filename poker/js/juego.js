@@ -25,19 +25,48 @@ const mesa = MesaExp.Mesa;
 // - El ganador se queda con el bote
 // - Se cambia de dealer
 
+//Creacion de mazo y jugadores
+
 const mazo = new baraja();
 const mesaJuego = new mesa();
 const j1 = new jugador("Humano");
 const j2 = new jugador("IA");
 
+//Elección de dealer
+
 JugadorExp.elegirDealer(j1, j2);
+
+//Fase de apostar ciegas en función del dealer. Arbitrariamente decido que las ciegas van a ser esas cantidades
+
+function ciegas(j1, j2) {
+  let ciegaPequeña = 0;
+  let ciegaGrande = 0;
+  if (j1.isDealer === true) {
+    ciegaPequeña = j1.apostar(5);
+    ciegaGrande = j2.apostar(10);
+  } else if (j2.isDealer === true) {
+    ciegaGrande = j1.apostar(10);
+    ciegaPequeña = j2.apostar(5);
+  }
+  return ciegaGrande + ciegaPequeña;
+}
+
+mesaJuego.sumarBote(ciegas(j1, j2)); // funcion de ciegas y se suma el bote a la vez
+
+//Fase de barajar y repartir
 
 mazo.barajar();
 mazo.repartir(j1, 2);
 mazo.repartir(j2, 2);
 
+//Primera fase de apuestas. Opciones: igualar lo de antes (al principio la ciega grande), plantarse o subir apuesta
+//Ahora hay que empezar con interacciones HTML antes de continuar.
+
 mazo.colocarEnMesa(mesaJuego, 3);
 
+// Segunda fase de apuestas
+
+//Comprobaciones en consola
 console.log(
   "Jugador 1:",
   j1.mano.map((mano) => mano.carta)
@@ -53,5 +82,8 @@ console.log(
 );
 console.log("Cartas restantes:", mazo.cartas.length);
 
-console.log(j1.isDealer);
-console.log(j2.isDealer);
+console.log("Es dealer?: ", j1.isDealer, "Es dealer?: ", j2.isDealer);
+
+console.log("Fichas del jugador 1: ", j1.fichas);
+console.log("Fichas del jugador 2: ", j2.fichas);
+console.log("Bote en la mesa: ", mesaJuego.bote);

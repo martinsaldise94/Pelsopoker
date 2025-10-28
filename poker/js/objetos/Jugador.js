@@ -22,7 +22,7 @@ class Jugador {
     } else {
       this.fichas -= monto;
       this.apuesta += monto;
-      mesa.bote += this.apuesta;
+      return monto;
     }
   }
 }
@@ -32,8 +32,10 @@ function elegirDealer(j1, j2) {
   let resultado = Math.random() * 10;
   if (resultado < 5) {
     j1.isDealer = true;
+    j2.isDealer = false;
   } else {
     j2.isDealer = true;
+    j1.isDealer = false;
   }
 }
 
