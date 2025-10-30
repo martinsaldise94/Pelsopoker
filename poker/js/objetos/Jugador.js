@@ -1,19 +1,11 @@
-const CartaExp = require("./cartas.js");
-const carta = CartaExp.Carta;
-
-const BarajaExp = require("./Baraja.js");
-const baraja = BarajaExp.Baraja;
-
-const MesaExp = require("./mesa.js");
-const mesa = MesaExp.Mesa;
-
-class Jugador {
+export class Jugador {
   constructor(nombre) {
     this.nombre = nombre;
     this.mano = [];
     this.fichas = 100; // juego con 100 fichas predeterminadas
     this.apuesta = 0;
     this.isDealer = false;
+    this.isPlaying = true;
   }
 
   apostar(monto) {
@@ -25,10 +17,13 @@ class Jugador {
       return monto;
     }
   }
+  plantar() {
+    this.isPlaying = false;
+  }
 }
 
 // Elección de dealer aleatoria
-function elegirDealer(j1, j2) {
+export function elegirDealer(j1, j2) {
   let resultado = Math.random() * 10;
   if (resultado < 5) {
     j1.isDealer = true;
@@ -38,8 +33,3 @@ function elegirDealer(j1, j2) {
     j1.isDealer = false;
   }
 }
-
-module.exports = {
-  Jugador,
-  elegirDealer,
-};

@@ -1,20 +1,14 @@
-const CartaExp = require("./cartas.js");
-const carta = CartaExp.Carta;
-const JugadorExp = require("./Jugador.js");
-const jugador = JugadorExp.Jugador;
-const MesaExp = require("./mesa.js");
-const mesa = MesaExp.Mesa;
-
-class Baraja {
+import { Carta } from "./cartas.js";
+export class Baraja {
   constructor() {
     this.cartas = this.crearBaraja();
   }
   crearBaraja() {
     const nuevaBaraja = [];
-    const valores = Object.keys(carta.valor);
-    for (const palo of carta.palos) {
+    const valores = Object.keys(Carta.valor);
+    for (const palo of Carta.palos) {
       for (const valor of valores) {
-        nuevaBaraja.push(new carta(valor, palo));
+        nuevaBaraja.push(new Carta(valor, palo));
       }
     }
 
@@ -43,7 +37,3 @@ class Baraja {
     }
   }
 }
-
-module.exports = {
-  Baraja,
-};

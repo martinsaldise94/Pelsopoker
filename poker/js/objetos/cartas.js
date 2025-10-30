@@ -1,4 +1,4 @@
-class Carta {
+export class Carta {
   static valor = {
     2: 0,
     3: 1,
@@ -28,7 +28,3 @@ class Carta {
     return Carta.valor[this.num];
   }
 }
-
-module.exports = {
-  Carta,
-};
