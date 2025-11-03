@@ -4,34 +4,34 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Texas Hold'em</title>
-    <script type="module" src="./js/objetos/juego.js" defer></script>
+    <script type="module" src="./js/objetos/juego2.js" defer></script>
     <link rel="stylesheet" href="./poker.css" />
   </head>
   <body>
     <header>
-      <h1>Texas Hold'em</h1>
+      <h1></h1>
     </header>
     <main>
-      <article id="mesaJuego">
-        <h3>Mesa</h3>
-        <ul id="cartasMesa"></ul>
-      </article>
-
-      <article id="jugador1">
-        <header>Jugador</header>
-        <ul id="manoJ1"></ul>
-        <div id="fichasJ1"></div>
-        <div id="panelApuestasJ1">
-          <button id="btnPlantar">Plantarse (Fold)</button>
-          <button id="btnIgualar">Igualar apuesta (Call)</button>
-          <button id="btnSubir">Subir apuesta (Raise)</button>
-        </div>
-      </article>
-      <article id="jugador2">
-        <header>IA</header>
-        <ul id="manoJ2"></ul>
-        <div id="fichasJ2"></div>
-      </article>
+      <div class="tableroGrande">
+        <article id="jugador1">
+          <header>Jugador</header>
+          <ul id="manoJ1"></ul>
+          <div id="fichasJ1"></div>
+        </article>
+        <article id="mesaJuego">
+          <div id="infoMesa">
+            <p id="faseActual"></p>
+          </div>
+          <ul id="cartasMesa"></ul>
+          <ul id="fichasMesa"></ul>
+        </article>
+        <article id="jugador2">
+          <header>IA</header>
+          <ul id="manoJ2"></ul>
+          <div id="fichasJ2"></div>
+        </article>
+        <div id="panelApuestasJ1"></div>
+      </div>
     </main>
   </body>
 </html>

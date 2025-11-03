@@ -6,6 +6,7 @@ export class Jugador {
     this.apuesta = 0;
     this.isDealer = false;
     this.isPlaying = true;
+    this.hasPLayed = false;
   }
 
   apostar(monto) {
@@ -13,12 +14,13 @@ export class Jugador {
       throw Error("¡No tienes fichas suficientes!");
     } else {
       this.fichas -= monto;
-      this.apuesta += monto;
+      this.apuesta = monto;
       return monto;
     }
   }
   plantar() {
     this.isPlaying = false;
+    this.mano = [];
   }
 }
 

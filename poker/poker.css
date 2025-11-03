@@ -1,0 +1,160 @@
+/*FOndo */
+body {
+  background-color: #f1d4b2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  color: #f0f0f0;
+}
+/* Mesa */
+
+.tableroGrande {
+  width: 90vw;
+  max-width: 1300px;
+  height: 90vh;
+  padding: 20px;
+  background-color: #38761d;
+  border-radius: 50%;
+  border: 10px solid #8b5a2b;
+  display: flex;
+  justify-content: space-around;
+  position: relative;
+
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-rows: 85% 15%;
+  grid-template-areas:
+    "jugador1 mesaJuego jugador2"
+    ". panelApuestasJ1 .";
+  gap: 10px;
+  position: relative;
+}
+
+/* Cartas y zona de los player */
+
+article {
+  padding: 15px;
+  border-radius: 15px;
+  text-align: center;
+  color: white;
+  height: fit-content;
+}
+#jugador1 {
+  grid-area: jugador1;
+  align-self: center;
+}
+#jugador2 {
+  grid-area: jugador2;
+  align-self: center;
+}
+/* Mesa */
+
+#mesaJuego {
+  grid-area: mesaJuego;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  background-color: transparent;
+}
+
+#infoMesa {
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 10px 20px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+#faseActual {
+  font-size: 25px;
+  margin-bottom: 10px;
+  color: #f0e160;
+  font-weight: bolder;
+}
+
+#cartasMesa {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 15px;
+}
+
+#fichasMesa {
+  list-style: none;
+  margin-bottom: 20px;
+  font-weight: bold;
+  color: #ff9800;
+}
+
+/*Apuesstas */
+
+#panelApuestasJ1 {
+  grid-area: panelApuestasJ1;
+  align-self: center;
+  justify-self: center;
+  text-align: center;
+  padding: 10px 10px;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 25%;
+}
+
+#manoJ1,
+#manoJ2 {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  height: 70px; /* Altura para las cartas */
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+#fichasJ1,
+#fichasJ2 {
+  margin-top: 10px;
+  font-weight: bold;
+  color: #ff9800;
+}
+
+/* --------------------------------------------------------- */
+
+button {
+  font-size: 17px;
+  background-color: rgb(226, 223, 28);
+  border-radius: 10px;
+  border: #1a1818 solid;
+  transition: transform 0.5s;
+  font-weight: bold;
+}
+button:hover {
+  background-color: #80e27e;
+  transform: scale(1.1);
+}
+button:active {
+  background-color: #43a047;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+}
+#btnver {
+  background-color: blueviolet;
+  transition: transform 0.5s;
+}
+
+#btnver:hover {
+  background-color: rgb(154, 69, 233);
+  transform: scale(1.2);
+}
