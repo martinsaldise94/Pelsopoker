@@ -34,6 +34,11 @@ body {
 
 /* Cartas y zona de los player */
 
+header {
+  margin-top: 10px;
+  font-weight: bold;
+  color: #ff9800;
+}
 article {
   padding: 15px;
   border-radius: 15px;
@@ -49,6 +54,7 @@ article {
   grid-area: jugador2;
   align-self: center;
 }
+
 /* Mesa */
 
 #mesaJuego {
@@ -108,18 +114,47 @@ article {
   padding: 0;
   display: flex;
   justify-content: center;
-  gap: 5px;
-  height: 70px; /* Altura para las cartas */
+  flex-grow: inherit; /* a ver si con esto soluciono los tamaños*/
+  gap: 10px;
+  height: 80px;
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 10px;
   margin-bottom: 10px;
 }
 
+#manoJ1 li,
+#manoJ2 li,
+#cartasMesa li {
+  width: 60px;
+  height: 80px;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  color: black;
+  border-radius: 5px;
+  border: 2px solid black;
+  flex-shrink: 0;
+}
+#manoJ1 li.rojo,
+#manoJ2 li.rojo,
+#cartasMesa li.rojo {
+  color: red;
+}
+/* #manoJ2 li.oculta {
+  background: rgb(55, 10, 216) !important;
+  color: rgb(55, 10, 216) !important;
+  border: 2px solid black;
+} */
 #fichasJ1,
 #fichasJ2 {
   margin-top: 10px;
   font-weight: bold;
   color: #ff9800;
+  background-color: #1a1818;
+  border-radius: 5px;
+  padding: 2px 1px;
 }
 
 /* --------------------------------------------------------- */
@@ -148,13 +183,4 @@ button:active {
   50% {
     transform: rotate(5deg);
   }
-}
-#btnver {
-  background-color: blueviolet;
-  transition: transform 0.5s;
-}
-
-#btnver:hover {
-  background-color: rgb(154, 69, 233);
-  transform: scale(1.2);
 }

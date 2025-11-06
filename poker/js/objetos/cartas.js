@@ -15,7 +15,7 @@ export class Carta {
     A: 12,
   };
   static palos = ["♠", "♥", "♦", "♣"];
-  static colorPalo = { "♠": "Negro", "♥": "Rojo", "♦": "Rojo", "♣": "Negro" };
+  static colorPalo = { "♠": "negro", "♥": "rojo", "♦": "rojo", "♣": "negro" };
 
   constructor(num, palo) {
     this.num = num; // 2-10, J, Q, K, A

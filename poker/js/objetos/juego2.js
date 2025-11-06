@@ -43,12 +43,14 @@ function iniciarRonda() {
   j2.mano = [];
   j2.apuesta = 0;
   j2.hasPLayed = false;
-  ultimaApuesta = 10;
+  ultimaApuesta = 5;
   mesaJuego.cartasMesa = [];
 
   console.log("Fase de ciegas. El dealer pone 5 fichas y el otro, 10");
 
   mesaJuego.sumarBote(ciegas(j1, j2));
+  j1.apuesta = 0;
+  j2.apuesta = 0;
   console.log("Bote en la mesa:", mesaJuego.bote);
   mostrarFichas();
 
@@ -63,7 +65,7 @@ function iniciarRonda() {
   setTimeout(() => iniciarPreFLop(), 2000);
 }
 function turnoHumano() {
-  apuestaNecesaria = ultimaApuesta;
+  apuestaNecesaria = ultimaApuesta - j1.apuesta;
 
   panel.innerHTML = `<div class = containerbutton>
                      <button id="btnPlantar">Plantarse (Fold)</button>
@@ -88,7 +90,7 @@ function turnoHumano() {
   call.addEventListener("click", () => {
     panel.innerHTML = "";
     panel.style.display = "none";
-    const apostadoAhora = ultimaApuesta;
+    const apostadoAhora = apuestaNecesaria;
     j1.apostar(apostadoAhora);
     mesaJuego.sumarBote(apostadoAhora);
     j1.hasPLayed = true;
@@ -227,7 +229,7 @@ function faseApuestas() {
 }
 
 function turnoIAPreFloop() {
-  apuestaNecesaria = ultimaApuesta;
+  apuestaNecesaria = ultimaApuesta - j2.apuesta;
 
   let decision = Math.random() * 10;
 
@@ -352,6 +354,8 @@ function mostrarCartasPLayer(player, cMano) {
   player.mano.forEach((carta) => {
     const li = document.createElement("li");
     li.textContent = carta.carta;
+    li.classList.add(carta.color);
+    li.classList.add("oculta");
     cMano.appendChild(li);
   });
 }
@@ -361,6 +365,7 @@ function mostrarCartasMesa() {
   mesaJuego.cartasMesa.forEach((carta) => {
     const li = document.createElement("li");
     li.textContent = carta.carta;
+    li.classList.add(carta.color);
     table.appendChild(li);
   });
 }
@@ -391,4 +396,226 @@ function mostrarFichas() {
   fichasJ1.textContent = `Fichas: ${j1.fichas}. Última apuesta: ${j1.apuesta}`;
   fichasJ2.textContent = `Fichas: ${j2.fichas}. Última apuesta: ${j2.apuesta}`;
   tableF.textContent = `Bote: ${mesaJuego.bote}`;
+}
+function revelarCartasJ2() {
+  const li = li.classList.remove("oculta");
+}
+
+// Esta cosa tan rara la he visto en unos cuantos scripts de poker... NO se me ocurre ni en broma a mi usar un objeto aqui
+function contarValor(combinacion) {
+  let contador = {};
+  for (let carta of combinacion) {
+    let valor = carta.valor;
+    contador[valor] = (contador[valor] || 0) + 1;
+  }
+  return contador;
+}
+
+function contarPalo(combinacion) {
+  let contador = {};
+  for (let carta of combinacion) {
+    let palo = carta.palo;
+    contador[palo] = (contador[palo] || 0) + 1;
+  }
+  return contador;
+}
+
+// funciones para el showdown
+
+function iniciarShowdown() {
+  let j1Cartas = mesaJuego.cartasMesa.concat(j1.mano);
+  let j2Cartas = mesaJuego.cartasMesa.concat(j2.mano);
+
+  // 2- Elegir la mejor con una funcion de comparar 1 FUNCION
+
+  // 3- Hacer una funcion que metes las 7 cartas, usa la primera funcion y luego la segunda
+
+  // 4- ELegir la mejor de las dos manos mejores- Otra funcion
+}
+
+function combinacionDe5(hand7) {
+  const combinaciones5 = [];
+  for (let i = 0; i < hand7.length; i++) {
+    for (let j = i + 1; j < hand7.length; j++) {
+      for (let k = j + 1; k < hand7.length; k++) {
+        for (let l = k + 1; l < hand7.length; l++) {
+          for (let m = l + 1; m < hand7.length; m++) {
+            combinaciones5.push([
+              hand7[i],
+              hand7[j],
+              hand7[k],
+              hand7[l],
+              hand7[m],
+            ]);
+          }
+        }
+      }
+    }
+  }
+  return combinaciones5;
+}
+
+function mejorManode7(hand7) {
+  let combinaciones = combinacionDe5(hand7);
+  resultado = 0;
+
+  for (let combinacion of combinaciones) {
+    let puntuacion = evaluacionMano(combinacion);
+    if (puntuacion > resultado) {
+      resultado = puntuacion;
+    }
+  }
+}
+
+function evaluacionMano(combinacion) {
+  if (checkIfRoyalFlush(combinacion)) {
+    return 10;
+  } else if (checkIfStraightFlush(combinacion)) {
+    return 9;
+  } else if (checkIfFourOfAKind(combinacion)) {
+    return 8;
+  } else if (checkIfFullHOuse(combinacion)) {
+    return 7;
+  } else if (checkIfFlush(combinacion)) {
+    return 6;
+  } else if (checkIfStraight(combinacion)) {
+    return 5;
+  } else if (checkIfThreeOfAKind(combinacion)) {
+    return 4;
+  } else if (checkIfDoublePair(combinacion)) {
+    return 3;
+  } else if (checkIfOnePair(combinacion)) {
+    return 2;
+  } else {
+    return 1;
+  }
+}
+
+function checkIfRoyalFlush(combinacion) {
+  let resultado = false;
+  let esRoyal = false;
+  let valores = [];
+  for (let i = 0; i < combinacion.length; i++) {
+    valores.push(combinacion[i].valor);
+  }
+  let valoresOrdenados = valores.sort((a, b) => a - b);
+  if (
+    valoresOrdenados[0] == 8 &&
+    valoresOrdenados[1] == 9 &&
+    valoresOrdenados[2] == 10 &&
+    valoresOrdenados[3] == 11 &&
+    valoresOrdenados[4] == 12
+  ) {
+    esRoyal = true;
+  }
+  if (esRoyal == true && checkIfFlush(combinacion) == true) {
+    resultado = true;
+  }
+  return resultado;
+}
+function checkIfStraightFlush(combinacion) {
+  let resultado = false;
+  if (checkIfFlush(combinacion) == true && checkIfStraight(combinacion)) {
+    resultado = true;
+  }
+  return resultado;
+}
+function checkIfFourOfAKind(combinacion) {
+  let resultado = false;
+  let cuenta = 0;
+  let valores = Object.values(contarValor(combinacion));
+  for (let valor of valores) {
+    if (valor === 4) {
+      cuenta++;
+    }
+    if (cuenta == 1) {
+      resultado = true;
+    }
+  }
+  return resultado;
+}
+function checkIfFullHOuse(combinacion) {
+  let resultado = false;
+  let cuentaP = 0;
+  let cuentaT = 0;
+  let valores = Object.values(contarValor(combinacion));
+  for (let valor of valores) {
+    if (valor === 2) {
+      cuentaP++;
+    } else if (valor === 3) {
+      cuentaT++;
+    }
+    if (cuentaP + cuentaT == 2) {
+      resultado = true;
+    }
+  }
+  return resultado;
+}
+function checkIfFlush(combinacion) {
+  let resultado = true;
+  for (let c of combinacion) {
+    if (combinacion[0].palo !== c.palo) {
+      resultado = false;
+      break;
+    }
+  }
+  return resultado;
+}
+function checkIfStraight(combinacion) {
+  let resultado = true;
+  let valores = [];
+  for (let i = 0; i < combinacion.length; i++) {
+    valores.push(combinacion[i].valor);
+  }
+  let valoresOrdenados = valores.sort((a, b) => a - b);
+  for (let i = 0; i < valoresOrdenados.length; i++) {
+    if (valoresOrdenados[i + 1] != valoresOrdenados[i] + 1) {
+      resultado = false;
+      break;
+    }
+  }
+  return resultado;
+}
+
+function checkIfThreeOfAKind(combinacion) {
+  let resultado = false;
+  let cuenta = 0;
+  let valores = Object.values(contarValor(combinacion));
+  for (let valor of valores) {
+    if (valor === 3) {
+      cuenta++;
+    }
+    if (cuenta == 1) {
+      resultado = true;
+    }
+  }
+  return resultado;
+}
+function checkIfDoublePair(combinacion) {
+  let resultado = false;
+  let cuenta = 0;
+  let valores = Object.values(contarValor(combinacion));
+  for (let valor of valores) {
+    if (valor === 2) {
+      cuenta++;
+    }
+    if (cuenta == 2) {
+      resultado = true;
+    }
+  }
+  return resultado;
+}
+function checkIfOnePair(combinacion) {
+  let resultado = false;
+  let cuenta = 0;
+  let valores = Object.values(contarValor(combinacion));
+  for (let valor of valores) {
+    if (valor === 2) {
+      cuenta++;
+    }
+    if (cuenta == 1) {
+      resultado = true;
+    }
+  }
+  return resultado;
 }
