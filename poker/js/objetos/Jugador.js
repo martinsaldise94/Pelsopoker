@@ -10,12 +10,19 @@ export class Jugador {
   }
 
   apostar(monto) {
-    if (monto > this.fichas) {
-      throw Error("¡No tienes fichas suficientes!");
+    let montoNumero = parseInt(monto);
+
+    if (isNaN(montoNumero) || montoNumero < 0) {
+      throw new Error(
+        "El monto de la apuesta debe ser un número positivo válido."
+      );
+    }
+    if (montoNumero > this.fichas) {
+      throw new Error("¡No tienes fichas suficientes!");
     } else {
-      this.fichas -= monto;
-      this.apuesta = monto;
-      return monto;
+      this.fichas -= montoNumero;
+      this.apuesta = montoNumero;
+      return montoNumero;
     }
   }
   plantar() {

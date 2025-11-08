@@ -8,6 +8,44 @@
     <link rel="stylesheet" href="./poker.css" />
   </head>
   <body>
+    <div id="cuentaCosas"></div>
+    <div id="panelInicio">
+      <div id="mensajeBienvenida">
+        <h2>¡Bienvenidos, futuros millonarios!!</h2>
+        <p>
+          Les damos la bienvenida a su espacio seguro favorito. Aquí siempre
+          tendrán la razón en sus decisiones y no le cuestionaremos nada. Dejen
+          atrás el sentido común y la responsabilidad fiscal. La vida es una y
+          hay que vivirla. Aquí jugamos con la regla de oro: si tienes fichas,
+          úsalas. Deje sus problemas en la puerta; aquí solo importa el bote y
+          la esperanza de multiplicarlo. Recuerden que en las apuestas no hay
+          perderdores, solo gente que se retira antes de tiempo.
+        </p>
+
+        <form id="nombres">
+          <label for="nombrej1">Introduzca su nombre:</label>
+          <input type="text" id="nombrej1" required /><br /><br />
+
+          <label for="nombrej2"
+            >Introduzca el nombre de la persona que quiere desplumar:</label
+          >
+          <input type="text" id="nombrej2" required /><br /><br />
+
+          <button type="submit" id="btnEMpezar">Comenzar juego</button>
+        </form>
+      </div>
+    </div>
+    <audio
+      id="musicaFondo"
+      src="./musicaytal/musicaLudopata.mp3"
+      loop
+      autoplay
+    ></audio>
+    <audio
+      id="musicaFondo2"
+      src="./musicaytal/temardopaganarMano.mp3"
+      loop
+    ></audio>
     <header>
       <h1></h1>
     </header>
