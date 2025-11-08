@@ -37,6 +37,7 @@ function comenzarJuego(nombre1, nombre2) {
   const fichasJ2 = document.getElementById("fichasJ2");
   const panel = document.getElementById("panelApuestasJ1");
   const faseMesa = document.getElementById("faseActual");
+  const cuentaCosas = document.getElementById("cuentaCosas");
 
   const mazo = new Baraja();
   const mesaJuego = new Mesa();
@@ -53,22 +54,24 @@ function comenzarJuego(nombre1, nombre2) {
   mostrarFichas();
 
   console.log(
-    `Comienza la partida"" Humano vs IA. El dealer es:${
-      j1.isDealer ? j1.nombre : j2.nombre
-    }`
+    `Comienza la partida: ${j1.nombre} vs ${
+      j2.nombre
+    }. El dealer en la primera ronda es: ${j1.isDealer ? j1.nombre : j2.nombre}`
   );
 
-  setTimeout(() => iniciarRonda(), 1500);
+  setTimeout(() => iniciarRonda(), 3000);
 
   // funciones
 
   function iniciarRonda() {
     if (j2.fichas < 30) {
-      console.log("Ánimo!!!! Ya le tienes");
+      console.log("Ánimo!!!! Ya le tienes!! Le quedan", j2.fichas, "fichas");
       musica.pause();
       musica2.play();
     }
-    console.log("Iniciando ronda nueva...");
+    setTimeout(() => {
+      console.log("Iniciando ronda nueva...");
+    }, 2000);
     faseActual = "Preflop";
     j1.mano = [];
     j1.apuesta = 0;
@@ -83,21 +86,24 @@ function comenzarJuego(nombre1, nombre2) {
     mostrarCartasPLayer(j1, manoJ1);
     mostrarCartasPLayer(j2, manoJ2);
     mostrarCartasMesa();
-    console.log("Fase de ciegas. El dealer pone 5 fichas y el otro, 10");
-
+    setTimeout(() => {
+      console.log(
+        `Fase de ciegas. ${
+          j1.isDealer ? j1.nombre : j2.nombre
+        } pone 5 fichas y ${j2.isDealer ? j1.nombre : j2.nombre}, 10`
+      );
+    }, 4000);
     mesaJuego.sumarBote(ciegas(j1, j2));
-    console.log("Bote en la mesa:", mesaJuego.bote);
     mostrarFichas();
 
     mazo.crearBaraja();
 
     mazo.barajar();
 
-    console.log("Comienza el Preflop...");
-    console.log(
-      "--------------------------------------------------------------------------------------------"
-    );
-    setTimeout(() => iniciarPreFLop(), 2000);
+    setTimeout(() => {
+      console.log("Comienza el Preflop...");
+    }, 7000);
+    setTimeout(() => iniciarPreFLop(), 10000);
   }
   function turnoHumano() {
     apuestaNecesaria = ultimaApuesta - j1.apuesta;
@@ -122,7 +128,7 @@ function comenzarJuego(nombre1, nombre2) {
       panel.style.display = "none";
       j1.plantar();
       j1.hasPLayed = true;
-      console.log("j1 se planta, menudo cagón");
+      console.log("Te has plantado, cobarde");
       setTimeout(() => terminarMano(), 1500);
     });
 
@@ -149,12 +155,6 @@ function comenzarJuego(nombre1, nombre2) {
       j1.hasPLayed = true;
       mostrarFichas();
 
-      console.log("TURNO HUMANO, CALL");
-      console.log("cuantas fichas tiene", j1.fichas);
-      console.log("apuesta j1", j1.apuesta);
-      console.log("ultima apuesta", ultimaApuesta);
-      console.log("Bote en la mesa", mesaJuego.bote, "fichas");
-      console.log("-----------------------------------------");
       ultimaApuesta = j1.apuesta;
 
       turnoActual = j2;
@@ -193,16 +193,10 @@ function comenzarJuego(nombre1, nombre2) {
 
         turnoActual = j2;
 
-        console.log("TURNO HUMANO, JUGADA RAISE");
-        console.log("cuantas fichas tiene", j1.fichas);
-        console.log("apuesta j1", j1.apuesta);
-        console.log("ultima apuesta", ultimaApuesta);
-        console.log("Bote en la mesa", mesaJuego.bote, "fichas");
-        console.log("---------------------------------");
         setTimeout(() => continuarTurnoHumano(), 1500);
       });
     });
-    console.log("TURNO HUMANO: Esperando acción.");
+    console.log("Tu turno. Esperando acción.");
   }
   function continuarTurnoHumano() {
     j1.hasPLayed = true;
@@ -217,7 +211,7 @@ function comenzarJuego(nombre1, nombre2) {
     faseActual = "Preflop";
     faseMesa.textContent = "Fase actual: " + faseActual;
     console.log(
-      `Dealer ${
+      `${
         j1.isDealer ? j1.nombre : j2.nombre
       } reparte 2 cartas a cada jugador...`
     );
@@ -280,7 +274,7 @@ function comenzarJuego(nombre1, nombre2) {
     if (turnoActual === j1) {
       turnoHumano();
     } else {
-      console.log(" Turno de la IA. Está pensando...");
+      console.log(`Turno de ${j2.nombre}. Está pensando...`);
       setTimeout(() => turnoIAPreFloop(), 3000);
     }
   }
@@ -298,7 +292,7 @@ function comenzarJuego(nombre1, nombre2) {
       j1.isPlaying = true;
       j2.plantar();
       j2.hasPLayed = true;
-      console.log("j2 se planta, los robots también se cagan");
+      console.log(`${j2.nombre} se planta!!`);
       setTimeout(() => terminarMano(), 1500);
     } else if (decision < 9 && decision >= 0.5) {
       const apostadoAhora = apuestaNecesaria;
@@ -327,13 +321,18 @@ function comenzarJuego(nombre1, nombre2) {
       ultimaApuesta = j2.apuesta;
       mostrarFichas();
 
-      console.log("La IA apuesta", montoapostado, "fichas");
-      console.log("---------------------------------------");
+      setTimeout(() => {
+        console.log(j2.nombre, "apuesta", montoapostado, "fichas");
+      }, 2000);
 
       if (j1.hasPLayed && j2.hasPLayed) {
-        avanzarRonda();
+        setTimeout(() => {
+          avanzarRonda();
+        }, 5000);
       } else {
-        faseApuestas();
+        setTimeout(() => {
+          faseApuestas();
+        }, 5000);
       }
     } else {
       let raised = ultimaApuesta + Math.round(Math.random() * 5);
@@ -345,9 +344,13 @@ function comenzarJuego(nombre1, nombre2) {
         if (j2.fichas > 0) {
           let allIn = j2.fichas;
           j2.apostar(allIn);
-          console.warn(`La IA no pudo subir y fue ALL-IN con ${allIn} fichas.`);
+          console.log(
+            `${j2.nombre} no puede subir y va All In con ${allIn} fichas.`
+          );
         } else {
-          console.warn("La IA quería subir, pero ya no le quedan fichas.");
+          console.log(
+            `${j2.nombre} quiere subir, pero ya no le quedan fichas.`
+          );
         }
       }
       montoapostado = j2.apuesta;
@@ -360,14 +363,18 @@ function comenzarJuego(nombre1, nombre2) {
       ultimaApuesta = j2.apuesta;
 
       turnoActual = j1;
-      console.log("La IA sube la apuesta!!");
-      console.log("cuantas fichas tiene", j2.fichas);
-      console.log("apuesta j2", j2.apuesta);
-      console.log("ultima apuesta", raised);
+      setTimeout(() => {
+        console.log(j2.nombre, "sube la apuesta!!");
+      }, 2000);
+
       if (j1.hasPLayed && j2.hasPLayed) {
-        avanzarRonda();
+        setTimeout(() => {
+          avanzarRonda();
+        }, 5000);
       } else {
-        faseApuestas();
+        setTimeout(() => {
+          faseApuestas();
+        }, 5000);
       }
     }
   }
@@ -382,18 +389,21 @@ function comenzarJuego(nombre1, nombre2) {
     panel.style.display = "none";
     if (j1.isPlaying === true) {
       j1.fichas += mesaJuego.bote;
-      console.log(`j1 se lleva ${mesaJuego.bote} fichas!!`);
-      console.log("j1 tiene", j1.fichas, "fichas");
+      setTimeout(() => {
+        console.log(`Te llevas el bote y tienes ${j1.fichas} fichas!! `);
+      }, 2000);
     } else if (j2.isPlaying === true) {
       j2.fichas += mesaJuego.bote;
-      console.log(`j2 se lleva ${mesaJuego.bote} fichas!!`);
-      console.log("j2 tiene", j2.fichas, "fichas");
+      setTimeout(() => {
+        console.log(
+          `${j2.nombre} se lleva el bote y tiene ${j2.fichas} fichas!!`
+        );
+      }, 2000);
     }
     mostrarFichas();
     mesaJuego.bote = 0;
-    console.log("El rol de dealer se invierte...");
     cambiarDealer();
-    setTimeout(() => iniciarRonda(), 4000);
+    setTimeout(() => iniciarRonda(), 5000);
   }
 
   function avanzarRonda() {
@@ -443,9 +453,9 @@ function comenzarJuego(nombre1, nombre2) {
   }
   function finalizarRonda() {
     if (j1.fichas == 0) {
-      console.log("Has perdido");
+      console.log("Has perdido la partida");
     } else if (j2.fichas == 0) {
-      console.log(j2.nombre, "ha perdido");
+      console.log(j2.nombre, "ha perdido la partida");
     } else {
       cambiarDealer();
       iniciarRonda();
@@ -534,27 +544,25 @@ function comenzarJuego(nombre1, nombre2) {
     if (bestHandJ1 > bestHandJ2) {
       j1.fichas += mesaJuego.bote;
       console.log(
-        "J1 gana la mano con",
+        j1.nombre,
+        "gana la mano con",
         resultadoFinalJ1,
-        "!! Se lleva ",
-        mesaJuego.bote,
-        "fichas!!"
+        "!! Se lleva el bote!!"
       );
     } else if (bestHandJ2 > bestHandJ1) {
       j2.fichas += mesaJuego.bote;
       console.log(
-        "J2 gana la mano con",
+        j2.nombre,
+        "gana la mano con",
         resultadoFinalJ2,
-        "!! Se lleva",
-        mesaJuego.bote,
-        "fichas!!"
+        "!! Se lleva el bote!!"
       );
     } else {
       solucionarEmpate();
     }
     mesaJuego.bote = 0;
     mostrarFichas();
-    setTimeout(() => finalizarRonda(), 3000);
+    setTimeout(() => finalizarRonda(), 4000);
   }
 
   function combinacionDe5(hand7) {
@@ -746,18 +754,21 @@ function comenzarJuego(nombre1, nombre2) {
   }
 
   function solucionarEmpate() {
-    let j1Cartas = mesaJuego.cartasMesa.concat(j1.mano);
-    let j2Cartas = mesaJuego.cartasMesa.concat(j2.mano);
-
-    let cartasOrdenadasJ1 = j1Cartas.sort((a, b) => b.valor - a.valor);
-    let cartasOrdenadasJ2 = j2Cartas.sort((a, b) => b.valor - a.valor);
+    let cartasOrdenadasJ1 = j1.mano.sort((a, b) => b.valor - a.valor);
+    let cartasOrdenadasJ2 = j2.mano.sort((a, b) => b.valor - a.valor);
 
     if (cartasOrdenadasJ1[0].valor > cartasOrdenadasJ2[0].valor) {
       j1.fichas += mesaJuego.bote;
-      console.log("J1 gana la mano!! Se lleva", mesaJuego.bote, "fichas!!");
+      console.log(
+        j1.nombre,
+        "gana la mano por carta más alta!! Se lleva el bote!!"
+      );
     } else if (cartasOrdenadasJ2[0].valor > cartasOrdenadasJ1[0].valor) {
       j2.fichas += mesaJuego.bote;
-      console.log("J2 gana la mano!! Se lleva", mesaJuego.bote, "fichas!!");
+      console.log(
+        j2.nombre,
+        "gana la mano por carta más alta!! Se lleva el bote!!"
+      );
     } else {
       console.log("Empate!! Se reparte el bote de forma equitativa");
       let mitadBote = mesaJuego.bote / 2;
@@ -793,3 +804,8 @@ function comenzarJuego(nombre1, nombre2) {
   // SI llego, Añadir sonidos y mostrar mensajes para que sea más claro
   //Mejoras esteticas
 }
+const logueos = console.log;
+console.log = (...args) => {
+  logueos(...args);
+  cuentaCosas.textContent = args.join(" ");
+};

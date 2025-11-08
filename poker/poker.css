@@ -93,7 +93,7 @@ body {
 
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
-  grid-template-rows: 85% 15%;
+  grid-template-rows: 75% 25%;
   grid-template-areas:
     "jugador1 mesaJuego jugador2"
     ". panelApuestasJ1 .";
@@ -191,7 +191,9 @@ article {
   justify-self: center;
   text-align: center;
 }
-
+#panelApuestasJ1 p {
+  font-size: 40px;
+}
 #manoJ1,
 #manoJ2 {
   list-style: none;
